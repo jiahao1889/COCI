@@ -2,9 +2,9 @@
 <project-module
   type="WEB"
   name="COCI"
-  id="myeclipse.1287304016428"
+  id="myeclipse.1288021370032"
   context-root="/COCI"
-  j2ee-spec="1.4"
+  j2ee-spec="5.0"
   archive="COCI.war">
   <attributes>
     <attribute name="webrootdir" value="WebRoot" />
