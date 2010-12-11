@@ -1,11 +1,10 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
-<%@ taglib uri="http://java.fckeditor.net" prefix="FCK" %>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.Timestamp,java.sql.ResultSet,java.sql.Date,com.COCI.*,java.util.ArrayList,java.util.*" errorPage="" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/index.dwt.jsp" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>活动管理</title>
+<title>删除活动</title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
@@ -120,19 +119,37 @@ a:hover, a:active, a:focus { /* 此组选择器将为键盘导航者提供与鼠
   </ul>
   <div class="content">
     <h1><!-- InstanceBeginEditable name="TitleEditRegion" -->活动管理<!-- InstanceEndEditable --></h1>
-    
-    <%
-    if(session.getAttribute("auth").equals("2")){ %>
-    <a href="releaseact.jsp">发布活动</a>
-    <%} 
-    
-    else if(session.getAttribute("auth").equals("3")){ %>
-    <a href="deleteact.jsp">删除活动</a>
-    <a href="deleteuser.jsp">删除用户</a>
-    <a href="managepre.jsp">管理权限</a>
-    <%} %>
-    
-    <!-- InstanceBeginEditable name="TextEditRegion" -->TextEditRegion<!-- InstanceEndEditable --><!-- end .content --></div>
+    <!-- InstanceBeginEditable name="TextEditRegion" --><!-- InstanceEndEditable --><!-- end .content --></div>
+  <%
+    if(request.getParameter("id")==null)
+    {
+    }
+    else
+    {
+    Admin all = (Admin)session.getAttribute("muser");
+    String i=request.getParameter("id");
+    int j = Integer.parseInt(i);
+    all.DelActivity(j);
+    }%>
+<%
+        ActList all = new ActList();
+        //ArrayList<Activity> a = new ArrayList<Activity>();
+        ArrayList<Activity> a = all.AllActs(); 
+        for(int i=0; i < a.size(); i++)
+        {
+        	out.print(a.get(i).getTitle());
+        	out.print(a.get(i).getDate().toString());
+        	out.print(a.get(i).getID());%>
+        	<form id="form1" name="form1" method="post" action="deleteact.jsp?id=<%=a.get(i).getID()%>" onsubmit="return confirmDel()" >
+        <input type="submit" name ="delete" id="a.get(i).getID()"  value ="删除" />
+        </form>
+        <%}%>
+        <script type="text/javascript" > 
+        function confirmDel(){
+    return confirm("确认删除？");
+     } 
+     </script>
+        
   <div class="footer">
     <p>Copyright 2010.9-2010.12, COCI Group. all rights reserved.</p>
     <!-- end .footer --></div>
@@ -140,5 +157,6 @@ a:hover, a:active, a:focus { /* 此组选择器将为键盘导航者提供与鼠
 <script type="text/javascript">
 var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"../SpryAssets/SpryMenuBarDownHover.gif", imgRight:"../SpryAssets/SpryMenuBarRightHover.gif"});
 </script>
+
 </body>
 <!-- InstanceEnd --></html>

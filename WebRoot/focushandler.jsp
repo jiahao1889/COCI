@@ -119,25 +119,40 @@ a:hover, a:active, a:focus { /* 此组选择器将为键盘导航者提供与鼠标使用者相同的悬
     <li><a href="help.jsp" class="header">帮助</a></li>
   </ul>
   <div class="content">
-    <h1><!-- InstanceBeginEditable name="TitleEditRegion" -->全部活动列表<!-- InstanceEndEditable --></h1>
-    
+
+ 
     <%
-        ActList all = new ActList();
-        //ArrayList<Activity> a = new ArrayList<Activity>();
-        ArrayList<Activity> a = all.AllActs();
-        for(int i=0; i < a.size(); i++)
-        {
-         int itd=(a.get(i).getID());
-            %>
-            <a href="actdetail.jsp?id=<%=itd%>" target="_blank"><%
-        	out.print(a.get(i).getTitle());
-        	out.print(a.get(i).getDate().toString());
-        	out.print(a.get(i).getID());
-        	%></a>
-        	<br></br>
-        	<%
-        }%>
-    <!-- InstanceBeginEditable name="TextEditRegion" -->TextEditRegion<!-- InstanceEndEditable --><!-- end .content --></div>
+    Student auser = (Student)session.getAttribute("muser");
+    String i=request.getParameter("aid"); 
+    int ac_id = Integer.parseInt(i);
+    String j=request.getParameter("useid"); 
+    int use_id = Integer.parseInt(j);
+    String k=request.getParameter("focus"); 
+    auser.Focus(use_id,ac_id,k);
+    %>
+    <br></br>
+    
+    <span id="time" style="background:red">5</span>秒钟后自动跳转，如果不跳转，请点击下面链接
+        <script language="JavaScript1.2" type="text/javascript">
+            <!--
+            function delayURL(url) {               //定时跳转
+          var delay = document.getElementById("time").innerHTML;
+            if(delay > 0) {
+            delay--;
+            document.getElementById("time").innerHTML = delay;
+          } else {
+              window.top.location.href = url;
+              }
+          setTimeout("delayURL('" + url + "')", 1000); 
+        }
+        //-->
+    </script>
+    <a href="actdetail.jsp?id=<%=ac_id%>">返回</a>
+    <script type="text/javascript">
+    delayURL("actdetail.jsp?id=<%=ac_id%>");
+    </script>    
+   
+ <!-- InstanceBeginEditable name="TextEditRegion" -->TextEditRegion<!-- InstanceEndEditable --><!-- end .content --></div>
   <div class="footer">
     <p>Copyright 2010.9-2010.12, COCI Group. all rights reserved.</p>
     <!-- end .footer --></div>

@@ -119,25 +119,36 @@ a:hover, a:active, a:focus { /* 此组选择器将为键盘导航者提供与鼠标使用者相同的悬
     <li><a href="help.jsp" class="header">帮助</a></li>
   </ul>
   <div class="content">
-    <h1><!-- InstanceBeginEditable name="TitleEditRegion" -->全部活动列表<!-- InstanceEndEditable --></h1>
+
     
+    <%String i=request.getParameter("id"); 
+    int id = Integer.parseInt(i);
+    Activity a= new Activity(id);
+    out.print(a.getID());
+    %><br></br>
     <%
-        ActList all = new ActList();
-        //ArrayList<Activity> a = new ArrayList<Activity>();
-        ArrayList<Activity> a = all.AllActs();
-        for(int i=0; i < a.size(); i++)
-        {
-         int itd=(a.get(i).getID());
-            %>
-            <a href="actdetail.jsp?id=<%=itd%>" target="_blank"><%
-        	out.print(a.get(i).getTitle());
-        	out.print(a.get(i).getDate().toString());
-        	out.print(a.get(i).getID());
-        	%></a>
-        	<br></br>
-        	<%
-        }%>
-    <!-- InstanceBeginEditable name="TextEditRegion" -->TextEditRegion<!-- InstanceEndEditable --><!-- end .content --></div>
+     out.print(a.getTitle());
+     %><br></br>
+    <%
+      out.print(a.getDate());
+      %>
+      <br></br>
+      <% 
+      if(session.getAttribute("auth").equals("1")){
+     
+          Student auser = (Student)session.getAttribute("muser");
+          int uid = auser.getID();
+          
+          String name=auser.getName();
+           String s=auser.judgeFocus(id,uid);
+     %>
+     
+      <a href="focushandler.jsp?aid=<%=id%>&useid=<%=uid%>&focus=<%=s%>"><%=s%></a>
+     <%}
+      %>
+  
+   
+     <!-- InstanceBeginEditable name="TextEditRegion" -->TextEditRegion<!-- InstanceEndEditable --><!-- end .content --></div>
   <div class="footer">
     <p>Copyright 2010.9-2010.12, COCI Group. all rights reserved.</p>
     <!-- end .footer --></div>

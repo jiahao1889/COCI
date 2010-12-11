@@ -14,8 +14,7 @@ public class ActList {
 	{
 ArrayList<Activity> all = new ArrayList<Activity>();
 		
-	    String dbName="coci";
-	    String tableName="act";
+
 	    Connection connection = SqlString.connectSql();
 	    Statement statement1=connection.createStatement();
         
@@ -58,16 +57,24 @@ ArrayList<Activity> all = new ArrayList<Activity>();
 		
 	}
 	
-	public void DelAct()
+	public void DelAct(int aID)throws ClassNotFoundException, SQLException
 	{
+
+	    
+	    Connection connection = SqlString.connectSql();
+	    java.sql.Statement statement1=connection.createStatement();
+		
+		String sql="DELETE FROM "+tableName + " WHERE a_id = " + aID;
+	    statement1.executeUpdate(sql);
+	    statement1.close();     // 释放Statement对象
+	    connection.close();   // 关闭到MySQL服务器的连接
 		
 	}
 	
 	public void AddAct(String title,String content,String place,String acturl,Timestamp actDate,
 			Timestamp deadline,int classify,int maxnum,int uid) throws ClassNotFoundException, SQLException
 	{
-	    String dbName="coci";
-	    String tableName="act";
+
 	    Connection connection = SqlString.connectSql();
 	    Statement statement1=connection.createStatement();
         
@@ -95,6 +102,8 @@ ArrayList<Activity> all = new ArrayList<Activity>();
 	    connection.close();
 		
 	}
+    private String dbName="coci";
+    private String tableName="act";
 	//modified by WQY QJ
 	//private ArrayList<Activity> aList;
 

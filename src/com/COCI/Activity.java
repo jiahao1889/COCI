@@ -12,6 +12,28 @@ public class Activity {
 	{
 
 	}
+	public Activity(int id)throws ClassNotFoundException, SQLException
+	{
+		    String dbName="coci";
+		    String tableName="act";
+		    Connection connection = SqlString.connectSql();
+		    java.sql.Statement statement1=connection.createStatement();
+
+	        String sql="SELECT * FROM "+ tableName+" WHERE a_id= " + id;
+		    ResultSet rs = statement1.executeQuery(sql);
+		   while(rs.next()) {
+		    	String n = rs.getString(2);
+		    	Timestamp cdate = rs.getTimestamp(4);
+		    	actID = id;
+				title = n;
+				actDate = cdate;
+		    }
+		    
+		    rs.close();
+		    statement1.close();
+		    connection.close();
+
+	}
 	public Activity(String name, int a_id, Timestamp adate)
 	{
 		actID = a_id;

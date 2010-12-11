@@ -27,8 +27,6 @@ public class User {
 	
 	public boolean Register(String n, String p, String e,String t) throws ClassNotFoundException, SQLException
 	{
-		String dbName="coci";
-	    String tableName="user";
 	    
 	    Connection connection = SqlString.connectSql();
 	    java.sql.Statement statement1=connection.createStatement();
@@ -69,8 +67,6 @@ public class User {
 	
 	public int Login() throws ClassNotFoundException, SQLException
 	{
-		String dbName="coci";
-	    String tableName="user";
 	    
 	    Connection connection = SqlString.connectSql();
 	    java.sql.Statement statement1=connection.createStatement();
@@ -104,8 +100,6 @@ public class User {
 	{
 		if(this.ID!=-1)
 			return this.ID;
-		String dbName="coci";
-	    String tableName="user";
 	    
 	    Connection connection = SqlString.connectSql();
 	    java.sql.Statement statement1=connection.createStatement();
@@ -135,5 +129,7 @@ public class User {
 	protected int ID;
 	protected String userName;
 	protected String password;
+	private String dbName="coci";
+    private String tableName="user";
 
 }
