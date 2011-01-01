@@ -66,7 +66,7 @@ public class Activity {
 	
 	public Timestamp getDate()
 	{
-	    return actDate;	
+	    return actDate;
 	}
 	
 	public void Modify()

@@ -2,6 +2,8 @@
 	import="java.sql.Timestamp,java.sql.ResultSet,java.sql.Date,com.COCI.*,java.util.ArrayList,java.util.*"
 	pageEncoding="GB18030"%>
 
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<!-- InstanceBegin template="/Templates/index.dwt.jsp" codeOutsideHTMLIsLocked="false" -->
@@ -9,6 +11,56 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- InstanceBeginEditable name="doctitle" -->
 		<title>全部活动列表</title>
+
+		<!-- include the Tools -->
+		<script src="tools/jquery.tools.min.js">
+</script>
+
+
+
+		<!-- standalone page styling (can be removed) -->
+		<link rel="stylesheet" type="text/css" href="tools/standalone.css" />
+
+
+		<!-- dateinput styling -->
+		<link rel="stylesheet" type="text/css" href="tools/large.css" />
+
+		<style>
+#calendar {
+	height: 400px;
+	width: 410px;
+	float: left;
+	padding: 0px 60px;
+}
+
+#theday {
+	-moz-border-radius: 5px;
+	background-color: #36387B;
+	color: #FFFFFF;
+	float: left;
+	font-size: 90px;
+	height: 200px;
+	line-height: 50px;
+	margin-top: 30px;
+	padding: 60px;
+	text-shadow: 0 0 5px #DDDDDD;
+	text-align: center;
+	width: 200px;
+}
+
+#theday span {
+	display: block;
+	font-size: 16px;
+	text-align: center;
+}
+
+#theday content {
+	display: block;
+	font-size: 16px;
+	text-align: center;
+}
+</style>
+
 		<!-- InstanceEndEditable -->
 		<!-- InstanceBeginEditable name="head" -->
 		<!-- InstanceEndEditable -->
@@ -154,38 +206,62 @@ a:hover,a:active,a:focus { /* 此组选择器将为键盘导航者提供与鼠标使用者相同的悬停
 				</li>
 			</ul>
 			<div class="content">
+				<h1>
+					<!-- InstanceBeginEditable name="TitleEditRegion" -->
+					个人活动日历
+					<!-- InstanceEndEditable -->
+				</h1>
 				<!-- InstanceBeginEditable name="TextEditRegion" -->
+				<p>
+					<a href="actlistp.jsp">显示为列表</a>
+				</p>
+				<!-- wrapper element -->
+				<div id="calendar">
+					<input type="date" name="mydate" value="0" />
 
-				<%
-					String i = request.getParameter("id");
-					int id = Integer.parseInt(i);
-					Activity a = new Activity(id);
-				%>
+				</div>
 
-				<h1><%=a.getTitle()%></h1>
-				<br />
-				<h5><%=a.getDate()%></h5>
-				<br />
-				<p><%=a.getContent()%></p>
-				<%
-					if (session.getAttribute("muser") != null) {
+				<!-- large date display -->
+				<div id="theday"></div>
 
-						if (session.getAttribute("auth").equals("1")) {
+				<br clear="all" />
 
-							Student auser = (Student) session.getAttribute("muser");
-							int uid = auser.getID();
+				<!-- make it happen -->
+				<script>
+$(function() {
 
-							String name = auser.getName();
-							String s = auser.judgeFocus(id, uid);
-				%>
-				<form method="post"
-					action="focushandler.jsp?aid=<%=id%>&useid=<%=uid%>&focus=<%=s%>">
-					<input type="submit" value="<%=s%>" />
-				</form>
-				<%
-					}
-					}
-				%>
+// initialize dateinput
+$(":date").dateinput( {
+		
+	// closing is not possible
+	onHide: function()  {
+		return false; 
+	},
+	
+<%ActList actp = new ActList();
+			Student student = (Student) session.getAttribute("muser");
+			ArrayList<Activity> a = actp.SearchByFocus(student.getID());%>
+
+	// when date changes update the day display
+	change: function(e, date)  {
+		$("#theday").html(this.getValue("dd<span>mmmm yyyy</span>"));
+    	<%for (int i = 0; i < a.size(); i++) {%>
+        		if ((this.getValue().getMonth()==(<%=a.get(i).getDate().getMonth()%>))
+        		&&(this.getValue().getDay()==(<%=a.get(i).getDate().getDay()%>))
+        		&&(this.getValue().getYear()==(<%=a.get(i).getDate().getYear()%>)))
+        		$("#theday").append(
+    			'<content>'+
+        		'<a href="actdetail.jsp?id=<%=a.get(i).getID()%>" target="_blank">'+
+        		'<%=a.get(i).getTitle()%></a>'+
+        		'</content>'
+				); 
+        	<%}%>
+	}
+		
+// set initial value and show dateinput when page loads	
+}).data("dateinput").setValue(0).show();
+});
+</script>
 
 
 				<!-- InstanceEndEditable -->

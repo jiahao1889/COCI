@@ -1,22 +1,29 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*,com.COCI.*" errorPage="" %>
+<%@ page contentType="text/html; charset=utf-8" language="java"
+	import="java.sql.*,com.COCI.*" errorPage=""%>
 <%
     if(session.getAttribute("muser")==null){ 
     if(request.getParameter("usernamel")==null&&request.getParameter("passwordl")==null){%>
 <form id="form1" name="form1" method="post" action="">
-  <p>
-    <label for="usernamel">用户名</label>
-    <input type="text" name="usernamel" id="usernamel" />
-  </p>
-  <p>
-    <label for="passwordl">密码</label>
-    <input type="password" name="passwordl" id="passwordl" />
-  </p>
-  <p>
-    <input type="submit" name="apply" id="apply" value="登陆" />
-    <input type="reset" name="register" id="register" value="重置" />
-  </p>
+	<p>
+		<label for="usernamel">
+			用户名
+		</label>
+		<input type="text" name="usernamel" id="usernamel" />
+	</p>
+	<p>
+		<label for="passwordl">
+			密码
+		</label>
+		<input type="password" name="passwordl" id="passwordl" />
+	</p>
+	<p>
+		<input type="submit" name="apply" id="apply" value="登陆" />
+		<input type="reset" name="register" id="register" value="重置" />
+	</p>
 </form>
-<p><a href="register.jsp">立即注册</a></p>
+<p>
+	<a href="register.jsp">立即注册</a>
+</p>
 <%
 }
   else
@@ -48,18 +55,25 @@
       if(islog==0)
       {
       %>
-          <p>登录失败！</p>
-          <p><a href="">重新登录</a></p>
-          
-      <% 
+<p>
+	登录失败！
+</p>
+<p>
+	<a href="">重新登录</a>
+</p>
+
+<% 
          
       }
       else
       {
       %>
-      <p>您好！<%=name%></p>
-      <p><a href="logout.jsp">退出</a></p>
-      <%
+<p>
+	您好！<%=name%></p>
+<p>
+	<a href="logout.jsp">退出</a>
+</p>
+<%
           
       }
   }
@@ -69,7 +83,9 @@
         User auser = (User)session.getAttribute("muser");
         String name = auser.getName();   
     %>
-<p>您好！<%=name%></p>
-<p><a href="logout.jsp">退出</a></p>
+<p>
+	您好！<%=name%></p>
+<p>
+	<a href="logout.jsp">退出</a>
+</p>
 <%} %>
-    
