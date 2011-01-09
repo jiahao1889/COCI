@@ -1,0 +1,1 @@
+运行TestSuite.class就可以运行所有的测试。

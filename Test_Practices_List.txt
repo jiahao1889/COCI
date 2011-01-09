@@ -1,0 +1,17 @@
+the tests we use include£ºunit test£¬Function/UI Testing£¬Usability Tesing£¬Performance Testing¡£
+
+the files we submit include£º
+
+1.COCI_final:the final code of the project.
+
+2.FunctionTesting:the script for the function testing.
+
+3.UnitTests:the script and the code for the unit tests.
+
+4.UsabilityTesing:the script for the usability tesing.
+
+5.COCI_TestReport.doc
+
+6.COCI_TestPlan.doc
+
+7.contribution.doc
